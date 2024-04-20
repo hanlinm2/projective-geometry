@@ -17,5 +17,5 @@ Abstract: *Generative models can produce impressively realistic images. This pap
 <a href="https://projective-geometry.github.io/"><img src="https://img.shields.io/website?down_color=lightgrey&down_message=offline&label=Project%20Page&up_color=lightgreen&up_message=online&url=https%3A%2F%2Fprojective-geometry.github.io" height=22.5></a>
 
 <p align="center">
-<img height="400" alt="Architecture for Line Segment Classifier" src="./assets/teaser.png">
+<img max-height="200px" alt="Teaser Figure" src="./assets/teaser.png">
 </p>

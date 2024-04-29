@@ -19,3 +19,17 @@ Abstract: *Generative models can produce impressively realistic images. This pap
 <p align="center">
 <img max-height="200px" alt="Teaser Figure" src="./assets/teaser.png">
 </p>
+
+# Getting Started
+
+## Dataset Download
+
+Our experiments are done on the dataset with 256 x 256 resolution, which contains generated and real images with a train/val/test split. 
+
+We also release a high quality (1024 x 1024) dataset that contains only generated images for future research. 
+
+Download the dataset and put them in the `./dataset` folder 
+
+| Dataset (256x256) | High Quality Dataset (1024x1024) |
+| ------------- | ------------- |
+| [Download](https://huggingface.co/datasets/amitabh3/Projective-Geometry) | [Download](https://huggingface.co/datasets/amitabh3/Projective-Geometry-1024)  |

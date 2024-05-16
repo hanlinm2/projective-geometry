@@ -18,11 +18,11 @@ def get_shadow_object_paths(image_list):
     for path in image_list:
         shadow_path_split = path.split("/")
         shadow_path_split[-4] += "_shadow"
-        shadow_list.append(os.path.join("/", *shadow_path_split))
+        shadow_list.append(os.path.join(*shadow_path_split))
 
         object_path_split = path.split("/")
         object_path_split[-4] += "_object"
-        object_list.append(os.path.join("/", *object_path_split))
+        object_list.append(os.path.join(*object_path_split))
     return shadow_list, object_list
 
 def load_all_paths(base_path, data_paths):

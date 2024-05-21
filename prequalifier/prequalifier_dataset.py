@@ -4,7 +4,7 @@ import torch
 from PIL import Image
 import io
 import numpy as np
-from torch.utils.data import DataLoader
+from torch.utils.data import Dataset, DataLoader
 
 
 class JPEGCompressionTransform:
@@ -88,7 +88,7 @@ def get_test_dataloaders(test_image_paths, unconfident_image_paths, misclassifie
     easy_dataset = BaseDataset(easy_image_paths, class_to_idx, is_train = False)
     easy_dataloader = DataLoader(easy_dataset, batch_size=256, shuffle=True)
     
-    unconfident_dataset = BaseDataset(unconfident_image_paths, class_to_idx, is_train = False)
+    unconfident_dataset = BaseDataset(unconfident_image_paths + misclassified_image_paths, class_to_idx, is_train = False)
     unconfident_dataloader = DataLoader(unconfident_dataset, batch_size=256, shuffle=True)
     
     misclassified_dataset = BaseDataset(misclassified_image_paths, class_to_idx, is_train = False)

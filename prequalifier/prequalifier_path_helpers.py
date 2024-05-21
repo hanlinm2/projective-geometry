@@ -1,4 +1,3 @@
-from dataset import *
 import glob
 from pandas.core.common import flatten
 import torch
@@ -46,9 +45,10 @@ def load_all_paths(base_path, data_paths):
 
 def timestamp_paths_from_data_paths(base_path, data_paths):
     recent_timestamp_paths = {}
-    for index, data_path from data_paths:
+    for index, data_path in enumerate(data_paths):
         full_path = base_path + data_path
-        recent_string, dataset_string = data_path.split("_")
+        recent_string = data_path.split("_")[0]
+        dataset_string = data_path.split("_")[1]
         key = f"{recent_string}_{dataset_string}"
         paths = []
         for path in glob.glob(full_path):

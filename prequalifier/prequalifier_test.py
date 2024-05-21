@@ -1,4 +1,3 @@
-from dataset import *
 import glob
 from pandas.core.common import flatten
 import torch, torchvision
@@ -42,18 +41,20 @@ if __name__ == "__main__":
     
     misclassified_indoor_file = "./misclassified_indoor_list.pkl"
     misclassified_outdoor_file = "./misclassified_outdoor_list.pkl"
+    misclassified_combined_file = "./misclassified_combined_list.pkl"
 
     unconfident_indoor_file = "./unconfident_indoor_list.pkl"
     unconfident_outdoor_file = "./unconfident_outdoor_list.pkl"
+    unconfident_combined_file = "./unconfident_combined_list.pkl"
 
     if category == "indoor":
         image_data_paths = ["Kandinsky_Indoor"]
         recent_timestamp_data_paths = indoor_recent_timestamp_paths
 
-        misclassified_image_list = sorted(pickle.load(open(misclassified_indoor_file, "rb")))
-        unconfident_image_list = sorted(pickle.load(open(unconfident_indoor_file, "rb")))
+        misclassified_image_paths = sorted(pickle.load(open(misclassified_indoor_file, "rb")))
+        unconfident_image_paths = sorted(pickle.load(open(unconfident_indoor_file, "rb")))
         
-        save_path = "./checkpoints/Prequalifier_indoor.pth"
+        save_path = "./checkpoints/Prequalifier_indoor.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     elif category == "outdoor":
@@ -61,22 +62,20 @@ if __name__ == "__main__":
         image_data_paths = ["Kandinsky_Outdoor"]
         recent_timestamp_data_paths = outdoor_recent_timestamp_paths
 
-        misclassified_image_list = sorted(pickle.load(open(misclassified_outdoor_file, "rb")))
-        unconfident_image_list = sorted(pickle.load(open(unconfident_outdoor_file, "rb")))
+        misclassified_image_paths = sorted(pickle.load(open(misclassified_outdoor_file, "rb")))
+        unconfident_image_paths = sorted(pickle.load(open(unconfident_outdoor_file, "rb")))
         
-        save_path = "./checkpoints/Prequalifier_outdoor.pth"
+        save_path = "./checkpoints/Prequalifier_outdoor.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     elif category == "combined":
         image_data_paths = ["Kandinsky_Indoor", "Kandinsky_Outdoor"]
         recent_timestamp_data_paths = [indoor_recent_timestamp_paths, outdoor_recent_timestamp_paths]
-
-        misclassified_image_list = sorted(pickle.load(open(misclassified_indoor_file, "rb"))) + \
-            sorted(pickle.load(open(misclassified_outdoor_file, "rb")))
-        unconfident_image_list = sorted(pickle.load(open(unconfident_indoor_file, "rb"))) + \
-            sorted(pickle.load(open(unconfident_outdoor_file, "rb")))
         
-        save_path = "./checkpoints/Prequalifier_combined.pth"
+        misclassified_image_paths = sorted(pickle.load(open(misclassified_combined_file, "rb")))
+        unconfident_image_paths = sorted(pickle.load(open(unconfident_combined_file, "rb")))
+        
+        save_path = "./checkpoints/Prequalifier_combined.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     train_image_paths, val_image_paths, test_image_paths = load_all_paths(base_path, image_data_paths)
@@ -84,7 +83,7 @@ if __name__ == "__main__":
     
     easy_dataloader, unconfident_dataloader, misclassified_dataloader = get_test_dataloaders(test_image_paths, unconfident_image_paths, misclassified_image_paths, class_to_idx)
     
-    recent_timestamp_dataloaders = get_recent_timestamp_dataloaders(recent_timestamp_paths)
+    recent_timestamp_dataloaders = get_recent_timestamp_dataloaders(recent_timestamp_paths, class_to_idx)
    
     test(model, easy_dataloader, save_path, "easy")
     test(model, unconfident_dataloader, save_path, "unconfident")

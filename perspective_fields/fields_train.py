@@ -124,7 +124,7 @@ def train(model, train_dataloader, val_dataloader, save_path_prefix):
         print(f"TP: {tp}, FP: {fp}, FN: {fn}")
         print(f"Precision: {tp/(tp+fp)}, Recall: {tp/(tp+fn)}")
 
-        save_path = save_path_prefix + f"_{epoch}.pth"
+        save_path = save_path_prefix + f"_{epoch}.pt"
         accuracy = 100 * correct / total
         val_accuracies.append(accuracy)
         print(f"Accuracy: {accuracy:.2f}")

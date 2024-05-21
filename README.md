@@ -33,3 +33,12 @@ Download the dataset and put them in the `./dataset` folder
 | Dataset (256x256) | High Quality Dataset (1024x1024) |
 | ------------- | ------------- |
 | [Download](https://huggingface.co/datasets/amitabh3/Projective-Geometry) | [Download](https://huggingface.co/datasets/amitabh3/Projective-Geometry-1024)  |
+
+## Training and Testing
+
+Navigate to one of the following directories and follow the instructions in the README
+
+`prequalifier/`  
+`object_shadow/`   
+`perspective_fields/`  
+`line_segment/`  

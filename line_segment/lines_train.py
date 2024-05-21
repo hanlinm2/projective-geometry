@@ -148,7 +148,7 @@ if __name__ == "__main__":
 
     print(f"Image: Loaded {len(train_image_paths)} train, {len(val_image_paths)} val")
     
-     train_image_paths, val_image_paths, test_image_paths = remove_problem_paths(all_train_paths, all_val_paths, all_test_paths, base_path, category)
+    train_image_paths, val_image_paths, test_image_paths = remove_problem_paths(all_train_paths, all_val_paths, all_test_paths, base_path, category)
     
     print(f"Image (With Any Problem Paths Removed): Loaded {len(train_image_paths)} train, {len(val_image_paths)} val")
     

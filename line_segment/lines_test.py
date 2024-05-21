@@ -60,7 +60,7 @@ def test(model, test_dataloader, save_path, test_type):
     print(f"{plot_name} {test_type}")
     print("ROC curve area:", roc_auc)
     print(conf_matrix)
-    print(f"{conf_matrix[0].sum().item()} generated images, {conf_matrix[1].sum().item()} real images")
+    print(f"{conf_matrix[0].sum().item()} real images, {conf_matrix[1].sum().item()} generated images")
     tn = conf_matrix[0,0]
     tp = conf_matrix[1,1]
     fp = conf_matrix[0,1]
@@ -89,9 +89,11 @@ if __name__ == "__main__":
 
     misclassified_indoor_file = "./misclassified_indoor_list.pkl"
     misclassified_outdoor_file = "./misclassified_outdoor_list.pkl"
+    misclassified_combined_file = "./misclassified_combined_list.pkl"
 
     unconfident_indoor_file = "./unconfident_indoor_list.pkl"
     unconfident_outdoor_file = "./unconfident_outdoor_list.pkl"
+    unconfident_combined_file = "./unconfident_combined_list.pkl"
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -101,7 +103,7 @@ if __name__ == "__main__":
         misclassified_image_paths = sorted(pickle.load(open(misclassified_indoor_file, "rb")))
         unconfident_image_paths = sorted(pickle.load(open(unconfident_indoor_file, "rb")))
         
-        save_path = "./checkpoints/Lines_indoor.pth"
+        save_path = "./checkpoints/Lines_indoor.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     elif category == "outdoor":
@@ -111,23 +113,25 @@ if __name__ == "__main__":
         misclassified_image_paths = sorted(pickle.load(open(misclassified_outdoor_file, "rb")))
         unconfident_image_paths = sorted(pickle.load(open(unconfident_outdoor_file, "rb")))
         
-        save_path = "./checkpoints/Lines_outdoor.pth"
+        misclassified_image_paths, unconfident_image_paths = remove_problem_paths([misclassified_image_paths, unconfident_image_paths], base_path, category)
+        
+        save_path = "./checkpoints/Lines_outdoor.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     elif category == "combined":
         image_data_paths = ["Kandinsky_Indoor", "Kandinsky_Outdoor"]
-
-        misclassified_image_paths = sorted(pickle.load(open(misclassified_indoor_file, "rb"))) + \
-            sorted(pickle.load(open(misclassified_outdoor_file, "rb")))
-        unconfident_image_paths = sorted(pickle.load(open(unconfident_indoor_file, "rb"))) + \
-            sorted(pickle.load(open(unconfident_outdoor_file, "rb")))
         
-        save_path = "./checkpoints/Lines_combined.pth"
+        misclassified_image_paths = sorted(pickle.load(open(misclassified_combined_file, "rb")))
+        unconfident_image_paths = sorted(pickle.load(open(unconfident_combined_file, "rb")))
+        
+        misclassified_image_paths, unconfident_image_paths = remove_problem_paths([misclassified_image_paths, unconfident_image_paths], base_path, category)
+        
+        save_path = "./checkpoints/Lines_combined.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     all_train_paths, all_val_paths, all_test_paths = load_all_paths(base_path, image_data_paths)
     
-    train_image_paths, val_image_paths, test_image_paths = remove_problem_paths(all_train_paths, all_val_paths, all_test_paths, base_path, category)
+    train_image_paths, val_image_paths, test_image_paths = remove_problem_paths([all_train_paths, all_val_paths, all_test_paths], base_path, category)
     
     image_path_to_lines = load_image_path_to_lines(base_path)
     

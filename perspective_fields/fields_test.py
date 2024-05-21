@@ -94,7 +94,7 @@ def test(model, test_dataloader, save_path, test_type):
     print(f"{plot_name} {test_type}")
     print("ROC curve area:", roc_auc)
     print(conf_matrix)
-    print(f"{conf_matrix[0].sum().item()} generated images, {conf_matrix[1].sum().item()} real images")
+    print(f"{conf_matrix[0].sum().item()} real images, {conf_matrix[1].sum().item()} generated images")
     tn = conf_matrix[0,0]
     tp = conf_matrix[1,1]
     fp = conf_matrix[0,1]
@@ -221,7 +221,7 @@ if __name__ == "__main__":
         misclassified_image_list = sorted(pickle.load(open(misclassified_indoor_file, "rb")))
         unconfident_image_list = sorted(pickle.load(open(unconfident_indoor_file, "rb")))
         
-        save_path = "./checkpoints/Fields_indoor.pth"
+        save_path = "./checkpoints/Fields_indoor.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     elif category == "outdoor":
@@ -231,7 +231,7 @@ if __name__ == "__main__":
         misclassified_image_list = sorted(pickle.load(open(misclassified_outdoor_file, "rb")))
         unconfident_image_list = sorted(pickle.load(open(unconfident_outdoor_file, "rb")))
         
-        save_path = "./checkpoints/Fields_outdoor.pth"
+        save_path = "./checkpoints/Fields_outdoor.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     elif category == "combined":
@@ -242,7 +242,7 @@ if __name__ == "__main__":
         unconfident_image_list = sorted(pickle.load(open(unconfident_indoor_file, "rb"))) + \
             sorted(pickle.load(open(unconfident_outdoor_file, "rb")))
         
-        save_path = "./checkpoints/Fields_combined.pth"
+        save_path = "./checkpoints/Fields_combined.pt"
         model = load_model(target_device = device, path_to_checkpoint = save_path)
 
     train_image_paths, val_image_paths, test_image_paths = load_all_paths(base_path, image_data_paths)

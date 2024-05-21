@@ -15,7 +15,7 @@ class PerspectiveMapDataset(Dataset):
         joined_maps = torch.cat([latitude_map.unsqueeze(0), gravity_maps], dim = 0)
         return joined_maps
     
-    def image_path_to_field_path(image_path):
+    def image_path_to_field_path(self, image_filepath):
         dataset_type = image_filepath.split("/")[-4]
         directory = image_filepath.split("/")[-3]
         identifier = image_filepath.split("/")[-2]

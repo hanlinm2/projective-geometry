@@ -80,6 +80,7 @@ def plot_multiple_roc_curves(roc_curves, plot_labels, colors, save_path):
     plt.ylim([-0.05, 1.05])
     plt.xlabel('False Positive Rate', fontsize=14)
     plt.ylabel('True Positive Rate', fontsize=14)
+    title = save_path.split("/")[-1]
     plt.title(f'{title}')
     for index, roc_curve in enumerate(roc_curves):
         fpr, tpr, roc_auc = roc_curve

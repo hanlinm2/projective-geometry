@@ -116,15 +116,15 @@ def train(model, train_dataloader, val_dataloader, save_path_prefix):
         print(f"Epoch {epoch}:")
         print("Val confusion matrix:")
         print(conf_matrix)
-        print(f"{conf_matrix[0].sum().item()} generated images, {conf_matrix[1].sum().item()} real images")
-        
-        tp = conf_matrix[0,0]
-        fp = conf_matrix[1,0]
-        fn = conf_matrix[0,1]
+        print(f"{conf_matrix[0].sum().item()} real images, {conf_matrix[1].sum().item()} generated images")
+        tn = conf_matrix[0,0]
+        tp = conf_matrix[1,1]
+        fp = conf_matrix[0,1]
+        fn = conf_matrix[1,0]
         print(f"TP: {tp}, FP: {fp}, FN: {fn}")
         print(f"Precision: {tp/(tp+fp)}, Recall: {tp/(tp+fn)}")
 
-        save_path = save_path_prefix + f"_{epoch}.pt"
+        save_path = save_path_prefix + f"_{epoch}.pth"
         accuracy = 100 * correct / total
         val_accuracies.append(accuracy)
         print(f"Accuracy: {accuracy:.2f}")

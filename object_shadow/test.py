@@ -127,7 +127,7 @@ def test_ShadowObjectCNN():
     easy_test_object = sorted(list(set(all_test_object)-set(unconfident_object)-set(misclassified_object)))
     test_set = ShadowObjectDataset(easy_test_shadow, easy_test_object, class_to_idx)
     test_dataloader = DataLoader(test_set, batch_size = 128, shuffle = False, num_workers=6)
-    test(model, test_dataloader, save_path, "easy")
+    # test(model, test_dataloader, save_path, "easy")
 
     test_set = ShadowObjectDataset(unconfident_shadow, unconfident_object, class_to_idx)
     test_dataloader = DataLoader(test_set, batch_size = 128, shuffle = False, num_workers=6)

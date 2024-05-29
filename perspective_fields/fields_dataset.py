@@ -58,7 +58,7 @@ def get_test_dataloaders(test_image_paths, unconfident_image_paths, misclassifie
     easy_dataset = PerspectiveMapDataset(easy_image_paths, class_to_idx)
     easy_dataloader = DataLoader(easy_dataset, batch_size=256, shuffle=True)
     
-    unconfident_dataset = PerspectiveMapDataset(unconfident_image_paths, class_to_idx)
+    unconfident_dataset = PerspectiveMapDataset(unconfident_image_paths + misclassified_image_paths, class_to_idx)
     unconfident_dataloader = DataLoader(unconfident_dataset, batch_size=256, shuffle=True)
     
     misclassified_dataset = PerspectiveMapDataset(misclassified_image_paths, class_to_idx)

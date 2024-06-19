@@ -42,3 +42,16 @@ Navigate to one of the following directories and follow the instructions in the 
 `object_shadow/`   
 `perspective_fields/`  
 `line_segment/`  
+
+## BibTex
+
+```
+@InProceedings{Sarkar_2024_CVPR,
+    author    = {Sarkar, Ayush and Mai, Hanlin and Mahapatra, Amitabh and Lazebnik, Svetlana and Forsyth, D.A. and Bhattad, Anand},
+    title     = {Shadows Don't Lie and Lines Can't Bend! Generative Models don't know Projective Geometry...for now},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2024},
+    pages     = {28140-28149}
+}
+```
